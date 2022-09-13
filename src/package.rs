@@ -1,6 +1,25 @@
+use std::process::{Command, Stdio};
+
 use crate::ZyypCallback;
 
-pub fn install(sudo_tool:&str) -> ZyypCallback {
+const ZYPP:&str="zypper";
+
+pub fn install(sudo_tool:&str, packages:Vec<String>) -> ZyypCallback {
+    let pkgs:String = packages.concat();
+
+    let process = Command::new(sudo_tool)
+    .arg(ZYPP)
+    .arg("in")
+    .arg("-y")
+    .arg(pkgs.as_str())
+    .stdout(Stdio::piped())
+    .output()
+    .expect("Failed to install packages");
+
+    let result = String::from_utf8_lossy(&process.stdout).to_string();
+    let v: Vec<&str> = result.split("\n").collect();
+    dbg!(v);
+
     return ZyypCallback::ZyppNotImplemented;
 }
 
