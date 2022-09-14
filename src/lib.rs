@@ -8,10 +8,33 @@ pub enum ZyypCallback {
     ZyppNotImplemented
 }
 
+pub enum ZyppResKind {
+    NoKind,
+    Package,
+    Patch,
+    Pattern,
+    Product,
+    SrcPackage,
+    Application
+}
+
+impl ZyppResKind {
+    fn value(&self) -> &str {
+        match *self {
+            ZyppResKind::Application => "application",
+            ZyppResKind::NoKind => "",
+            ZyppResKind::Package => "package",
+            ZyppResKind::Patch => "patch",
+            ZyppResKind::Pattern => "pattern",
+            ZyppResKind::Product => "product",
+            ZyppResKind::SrcPackage => "srcpackage"
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::{package::{self, install}, ZyypCallback};
-
+    use crate::{package::package::install, ZyypCallback};
 
     #[test]
     fn it_works() {

@@ -1,40 +1,40 @@
-use std::process::{Command, Stdio};
+//! Bindings for libzypp's packagemanager (Package.cc)
+pub mod package {
+    use std::process::{Command, Stdio};
+    use crate::ZyypCallback;
 
-use crate::ZyypCallback;
-
-const ZYPP:&str="zypper";
-
-pub fn install(sudo_tool:&str, packages:Vec<String>) -> ZyypCallback {
-    let pkgs:String = packages.concat();
-
-    let process = Command::new(sudo_tool)
-    .arg(ZYPP)
-    .arg("in")
-    .arg("-y")
-    .arg(pkgs.as_str())
-    .stdout(Stdio::piped())
-    .output()
-    .expect("Failed to install packages");
-
-    let result = String::from_utf8_lossy(&process.stdout).to_string();
-    let v: Vec<&str> = result.split("\n").collect();
-    dbg!(v);
-
-    return ZyypCallback::ZyppNotImplemented;
-}
-
+    const ZYPP:&str="zypper";
+    
+    #[link(name = "zypp")]
+    extern {
+        fn IsAvailable(tag:&str) -> bool ;
+    }
+    
+    pub fn install(sudo_tool:&str, packages:Vec<String>) -> ZyypCallback {    
+        return ZyypCallback::ZyppNotImplemented;
+    }
+    
 pub fn uninstall(sudo_tool:&str, clean_deps:bool) -> ZyypCallback {
     return ZyypCallback::ZyppNotImplemented;
-}
-
-pub fn info(package:&str) -> String{
-    return "NotImplemented".to_string();
-}
-
+    }
+    
+    pub fn info(package:&str) -> String{
+        return "NotImplemented".to_string();
+    }
+    
 pub fn add_lock(sudo_tool:&str, packages:Vec<String>) -> ZyypCallback{
     return ZyypCallback::ZyppNotImplemented;
-}
-
-pub fn remove_lock(sudo_tool:&str, packages:Vec<String>) -> ZyypCallback {
-    return ZyypCallback::ZyppNotImplemented;
+    }
+    
+    pub fn remove_lock(sudo_tool:&str, packages:Vec<String>) -> ZyypCallback {
+        return ZyypCallback::ZyppNotImplemented;
+    }
+    
+    /// Test if the given tag is available
+    ///  
+    /// A tag is consideret to be:
+    /// - a packagename
+    ///     - Also quereis provides and required packages acroding to libzypp
+    /// - filename
+    pub fn is_available(tag:&str){}
 }
