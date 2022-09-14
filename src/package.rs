@@ -1,13 +1,10 @@
 //! Bindings for libzypp's packagemanager (Package.cc)
 pub mod package {
-    use std::process::{Command, Stdio};
     use crate::ZyppCallback;
-
-    const ZYPP:&str="zypper";
     
     #[link(name = "zypp")]
     extern {
-        fn IsAvailable(tag:&str) -> bool ;
+
     }
     
     pub fn install(sudo_tool:&str, packages:Vec<String>) -> ZyppCallback {    
