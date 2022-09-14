@@ -1,6 +1,6 @@
 pub mod repo;
 pub mod package;
-pub enum ZyypCallback {
+pub enum ZyppCallback {
     ZyppPackagesNotFound(Vec<String>),
     ZyppSuccess,
     ZyppTimeOut,
@@ -34,11 +34,11 @@ impl ZyppResKind {
 
 #[cfg(test)]
 mod tests {
-    use crate::{package::package::install, ZyypCallback};
+    use crate::{package::package::install, ZyppCallback};
 
     #[test]
     fn it_works() {
         let packages:Vec<String> = vec!["java-13-openjdk".to_string()];
-        assert!(matches!(install("sudo", packages), ZyypCallback::ZyppNotImplemented));
+        assert!(matches!(install("sudo", packages), ZyppCallback::ZyppNotImplemented));
     }
 }
