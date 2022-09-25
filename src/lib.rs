@@ -1,5 +1,7 @@
 pub mod repo;
 pub mod package;
+pub mod ffi;
+
 pub enum ZyppCallback {
     ZyppPackagesNotFound(Vec<String>),
     ZyppSuccess,
